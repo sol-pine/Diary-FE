@@ -18,6 +18,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     border: 0;
     font-size: 100%;
+    font-weight: 400;
     color: ${theme.main}
   }
   *::before, *::after {
@@ -38,7 +39,14 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
   }
   button{
+    border:none;
+    background:none;
     cursor: pointer;
+  }
+  input{
+    :focus{
+      outline: .5px solid ${theme.main};
+    }
   }
 `;
 
