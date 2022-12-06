@@ -1,26 +1,38 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {QueryClient, QueryClientProvider} from "react-query";
+import {ReactQueryDevtools} from "react-query/devtools";
+import {ThemeProvider} from "styled-components";
+import theme from "./styles/theme";
+import GlobalStyle from "./styles/GlobalStyle";
+import {Route, Routes} from "react-router-dom";
+
+import MainPage from "./pages/MainPage";
+import LogInPage from "./pages/LogInPage";
+import SignUpPage from "./pages/SignUpPage";
+import ResetPage from "./pages/ResetPage";
+import UserPage from "./pages/UserPage";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const queryClient = new QueryClient();
+
+    return (
+        <QueryClientProvider client={queryClient}>
+            <ThemeProvider theme={theme}>
+                <GlobalStyle/>
+                <div className="App">
+                    <Routes>
+                        <Route path="/" element={<MainPage/>}/>
+                        <Route path="/login" element={<LogInPage/>}/>
+                        <Route path="/signup" element={<SignUpPage/>}/>
+                        <Route path="/reset" element={<ResetPage/>}/>
+                        <Route path="/user" element={<UserPage/>}/>
+                    </Routes>
+                    <ReactQueryDevtools/>
+                </div>
+            </ThemeProvider>
+        </QueryClientProvider>
+    );
 }
 
 export default App;
