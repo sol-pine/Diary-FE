@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import {QueryClient, QueryClientProvider} from "react-query";
 import {ReactQueryDevtools} from "react-query/devtools";
 import {ThemeProvider} from "styled-components";
