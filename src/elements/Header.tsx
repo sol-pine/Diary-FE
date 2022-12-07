@@ -1,21 +1,44 @@
 import React from 'react';
 import styled from "styled-components";
+import {useNavigate} from "react-router-dom";
 import logo from "../assets/logo.svg";
 
 const Header = () => {
+    const navigate = useNavigate();
     const token = sessionStorage.getItem('token');
+
+    const handleLogOut = () => {
+        sessionStorage.removeItem('token')
+        navigate(`/`)
+    }
 
     return (
         <Base>
             <Wrapper>
-                <Logo src={logo} alt='로고'/>
+                <Logo
+                    onClick={() => navigate('/')}
+                    src={logo}
+                    alt='로고'
+                />
                 {
-                    token?
+                    token ?
                         <Buttons>
-                            <button>마이페이지</button>
-                            <button>로그아웃</button>
-                        </Buttons>:
-                        <button>로그인</button>
+                            <button
+                                onClick={() => navigate('/user')}
+                            >
+                                마이페이지
+                            </button>
+                            <button
+                                onClick={() => handleLogOut()}
+                            >
+                                로그아웃
+                            </button>
+                        </Buttons> :
+                        <button
+                            onClick={() => navigate('/login')}
+                        >
+                            로그인
+                        </button>
                 }
             </Wrapper>
         </Base>
@@ -38,18 +61,19 @@ const Wrapper = styled.div`
   width: 95vw;
   padding-top: 65px;
   margin: 0 auto;
-  button{
+
+  button {
     font-size: ${props => props.theme.fs11};
   }
 `
 
 const Logo = styled.img`
-  width:120px;
+  width: 120px;
   object-fit: contain;
   cursor: pointer;
 `
 
 const Buttons = styled.div`
   display: flex;
-  gap:20px;
+  gap: 20px;
 `

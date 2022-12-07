@@ -8,7 +8,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {Route, Routes} from "react-router-dom";
 
-import Header from "./elements/Header";
 import MainPage from "./pages/MainPage";
 import LogInPage from "./pages/LogInPage";
 import SignUpPage from "./pages/SignUpPage";
@@ -24,7 +23,6 @@ function App() {
                 <GlobalStyle/>
                 <div className="App">
                     <ToastContainer />
-                    <Header/>
                     <Routes>
                         <Route path="/" element={<MainPage/>}/>
                         <Route path="/login" element={<LogInPage/>}/>
