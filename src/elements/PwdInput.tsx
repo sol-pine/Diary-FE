@@ -6,9 +6,10 @@ import icEyeOff from "../assets/ic-eye-off.svg";
 interface PropsType {
     name: string;
     placeholder: string;
+    onChange:(e:React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const PwdInput = ({name, placeholder}: PropsType) => {
+const PwdInput = ({name, placeholder, onChange}: PropsType) => {
     const [isHide, setIsHide] = useState<boolean>(true);
     return (
         <div>
@@ -17,7 +18,7 @@ const PwdInput = ({name, placeholder}: PropsType) => {
                 <IconButton onClick={() => setIsHide(!isHide)}>
                     <PwdIcon src={isHide ? icEye : icEyeOff} alt={isHide ? '비밀번호 보기 아이콘' : '비밀번호 숨기기 아이콘'}/>
                 </IconButton>
-                <Input type={isHide ? "password" : "text"} placeholder={placeholder} maxLength={20}/>
+                <Input type={isHide ? "password" : "text"} placeholder={placeholder} maxLength={20} onChange={onChange}/>
             </Wrapper>
         </div>
     );

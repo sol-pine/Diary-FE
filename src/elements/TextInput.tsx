@@ -5,14 +5,15 @@ interface PropsType {
     name: string;
     placeholder: string;
     maxLength: number;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-const TextInput = ({name, placeholder, maxLength}: PropsType) => {
+const TextInput = ({name, placeholder, maxLength, onChange}: PropsType) => {
     return (
         <div>
             <InputLabel>{name}</InputLabel>
             <Wrapper>
-                <Input type="text" placeholder={placeholder} maxLength={maxLength}/>
+                <Input type="text" placeholder={placeholder} maxLength={maxLength} onChange={onChange}/>
             </Wrapper>
         </div>
     );
