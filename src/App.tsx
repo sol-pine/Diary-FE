@@ -4,8 +4,11 @@ import {ReactQueryDevtools} from "react-query/devtools";
 import {ThemeProvider} from "styled-components";
 import theme from "./styles/theme";
 import GlobalStyle from "./styles/GlobalStyle";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {Route, Routes} from "react-router-dom";
 
+import Header from "./elements/Header";
 import MainPage from "./pages/MainPage";
 import LogInPage from "./pages/LogInPage";
 import SignUpPage from "./pages/SignUpPage";
@@ -20,6 +23,8 @@ function App() {
             <ThemeProvider theme={theme}>
                 <GlobalStyle/>
                 <div className="App">
+                    <ToastContainer />
+                    <Header/>
                     <Routes>
                         <Route path="/" element={<MainPage/>}/>
                         <Route path="/login" element={<LogInPage/>}/>
