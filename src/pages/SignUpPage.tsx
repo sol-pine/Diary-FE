@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from "styled-components";
-import SignUpTitle from "../components/signUp/SignUpTitle";
+import Title from "../elements/Title";
 import SignUpForm from "../components/signUp/SignUpForm";
 
 const SignUpPage = () => {
     return (
         <Container>
-            <SignUpTitle/>
+            <Title title='회원가입'/>
             <SignUpForm/>
         </Container>
     );
