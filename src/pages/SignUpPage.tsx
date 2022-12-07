@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
-import SignUpTitle from "../components/SignUp/SignUpTitle";
-import SignUpForm from "../components/SignUp/SignUpForm";
+import SignUpTitle from "../components/signUp/SignUpTitle";
+import SignUpForm from "../components/signUp/SignUpForm";
 
 const SignUpPage = () => {
     return (
