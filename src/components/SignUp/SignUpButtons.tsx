@@ -1,9 +1,20 @@
 import React, {useState} from 'react';
+import {useNavigate} from "react-router-dom";
 import styled from "styled-components";
 import RoundButton from "../../elements/RoundButton";
+import useSignUpQuery from "../../hooks/useSignUpQuery";
 
-const SignUpButtons = () => {
+interface PropsType {
+    id: string,
+    pwd: string,
+    code: string
+}
+
+const SignUpButtons = ({id, pwd, code}: PropsType) => {
+    const navigate = useNavigate();
     const [isDisabled, setIsDisabled] = useState<boolean>(true);
+    // 회원가입
+    const query = useSignUpQuery(id, pwd, code)
 
     return (
         <Container>
@@ -16,8 +27,16 @@ const SignUpButtons = () => {
                 <Check className='check' htmlFor='agree-term-checkbox'/>
                 <Label htmlFor='agree-term-checkbox'>무드다이어리 회원가입에 동의합니다.</Label>
             </Wrapper>
-            <RoundButton isDisabled={isDisabled}>회원가입</RoundButton>
-            <LogInButton>이미 계정이 있으면? <span>로그인하기</span></LogInButton>
+            <RoundButton
+                onClick={() => query.mutate()}
+                isDisabled={isDisabled}>
+                회원가입
+            </RoundButton>
+            <LogInButton
+                onClick={() => navigate(`/login`)}
+            >
+                이미 계정이 있으면? <span>로그인하기</span>
+            </LogInButton>
         </Container>
     );
 };
@@ -35,7 +54,7 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 6px;
-  margin-left:10px;
+  margin-left: 10px;
 `
 
 const HiddenCheck = styled.input`
