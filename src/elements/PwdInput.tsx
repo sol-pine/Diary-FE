@@ -6,7 +6,7 @@ import icEyeOff from "../assets/ic-eye-off.svg";
 interface PropsType {
     name: string;
     placeholder: string;
-    onChange:(e:React.ChangeEvent<HTMLInputElement>) => void;
+    onChange?:(e:React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const PwdInput = ({name, placeholder, onChange}: PropsType) => {
