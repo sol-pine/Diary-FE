@@ -30,6 +30,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 5px;
+  margin-top:160px;
 `
 
 const Logo = styled.img`

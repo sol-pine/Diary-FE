@@ -1,11 +1,13 @@
 import React from 'react';
 import styled from "styled-components";
+import Header from "../elements/Header";
 import Title from "../elements/Title";
 import ResetForm from "../components/reset/ResetForm";
 
 const ResetPage = () => {
     return (
         <Container>
+            <Header/>
             <Title title='비밀번호 재설정'/>
             <ResetForm/>
         </Container>
@@ -15,9 +17,9 @@ const ResetPage = () => {
 export default ResetPage;
 
 const Container = styled.div`
-  width: 250px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 60px auto 0 auto;
+  margin: 0 auto;
 `

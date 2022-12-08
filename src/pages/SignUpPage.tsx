@@ -2,10 +2,12 @@ import React from 'react';
 import styled from "styled-components";
 import Title from "../elements/Title";
 import SignUpForm from "../components/signUp/SignUpForm";
+import Header from "../elements/Header";
 
 const SignUpPage = () => {
     return (
         <Container>
+            <Header/>
             <Title title='회원가입'/>
             <SignUpForm/>
         </Container>
@@ -15,9 +17,9 @@ const SignUpPage = () => {
 export default SignUpPage;
 
 const Container = styled.div`
-  width: 250px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 60px auto 0 auto;
+  margin: 0 auto;
 `

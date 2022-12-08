@@ -2,10 +2,12 @@ import React from 'react';
 import styled from "styled-components";
 import Title from "../elements/Title";
 import LogInForm from "../components/logIn/LogInForm";
+import Header from "../elements/Header";
 
 const LogInPage = () => {
     return (
         <Container>
+            <Header/>
             <Title title='로그인'/>
             <LogInForm/>
         </Container>
@@ -15,9 +17,9 @@ const LogInPage = () => {
 export default LogInPage;
 
 const Container = styled.div`
-  width: 250px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 60px auto 0 auto;
+  margin: 0 auto;
 `
