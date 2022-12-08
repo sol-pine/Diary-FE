@@ -20,13 +20,14 @@ test('버튼 활성화 테스트', ()=>{
     const rePwd = screen.getByPlaceholderText('위 비밀번호를 한번 더 입력해주세요')
     const button = screen.getByRole('button', {name: '재설정'})
 
+    // 버튼의 초기 상태는 비활성화 상태
     expect(button).toBeDisabled()
-
+    // 모든 입력 값을 입력하면
     userEvent.type(id, 'username')
     userEvent.type(code, '000000')
     userEvent.type(pwd, 'Password123!')
     userEvent.type(rePwd, 'Password123!')
-
+    // 버튼은 활성화 상태로 변경
     expect(button).toBeEnabled()
 })
 
