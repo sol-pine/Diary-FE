@@ -2,8 +2,12 @@ import axiosInstance from "./instance"
 
 // 회원가입
 export const postSignUp = (id: string, pwd: string, code: string) =>
-    axiosInstance.post(`/signup`, {id: id, pwd:pwd, code:code})
+    axiosInstance.post(`/signup`, {id: id, pwd: pwd, code: code})
 
 // 로그인
 export const postLogIn = (id: string, pwd: string) =>
-    axiosInstance.post(`/login`, {id:id, pwd:pwd})
+    axiosInstance.post(`/login`, {id: id, pwd: pwd})
+
+// 비밀번호 재설정
+export const putPwd = (id: string, code: string, newPwd: string) =>
+    axiosInstance.put(`/reset`, {id: id, code: code, newPwd: newPwd})
