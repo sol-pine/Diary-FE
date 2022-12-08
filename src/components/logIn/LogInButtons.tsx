@@ -12,7 +12,7 @@ interface PropsType {
 const LogInButtons = ({id, pwd}: PropsType) => {
     const navigate = useNavigate();
     const isDisabled = !(id && pwd);
-
+    // 로그인
     const query = useLogInQuery(id, pwd)
 
     return (
