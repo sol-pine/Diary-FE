@@ -1,21 +1,32 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import styled from "styled-components";
+import theme from "../styles/theme";
 import x from "../assets/ic-x.svg";
 import RoundButton from "./RoundButton";
 import {useAppDispatch} from "../redux/store";
 import {setModalState} from "../redux/modules/modalSlice";
 import useToday from "../hooks/useToday";
 import useMoodPostQuery from "../hooks/useMoodPostQuery";
+import useMoodQuery from "../hooks/useMoodQuery";
+
 
 const Modal = () => {
     const dispatch = useAppDispatch();
     const [mood, setMood] = useState<string>("");
     const [color, setColor] = useState<string>("");
     const isDisabled = !(mood && color)
-
+    // 오늘 날짜 조회
     const today = useToday();
+    // 무드 기록
+    const postQuery = useMoodPostQuery(mood, color);
+    // 무드 조회
+    const getQuery = useMoodQuery(Number(today.year), Number(today.month), Number(today.date));
 
-    const query = useMoodPostQuery(mood, color);
+    const {isMood, moodColor, moodText} = useMemo(() => ({
+        isMood: getQuery.data?.data.isMood,
+        moodColor: getQuery.data?.data.color,
+        moodText: getQuery.data?.data.moodText
+    }), [getQuery])
 
     return (
         <Base>
@@ -28,22 +39,39 @@ const Modal = () => {
             <MoodInput
                 onChange={e => setMood(e.target.value)}
                 placeholder='오늘을 기록하세요 (띄어쓰기 포함 140자)'
+                defaultValue={moodText}
             />
             <Wrapper>
                 <label htmlFor='mood-color-input'>오늘의 기분과 어울리는 색</label>
-                <ColorInput
-                    onChange={e => setColor(e.target.value)}
-                    type='color'
-                    id='mood-color-input'
-                />
+                {
+                    getQuery.isSuccess &&
+                        <ColorInput
+                            onChange={e => setColor(e.target.value)}
+                            type='color'
+                            id='mood-color-input'
+                            defaultValue={moodColor? moodColor : theme.gray200}
+                        />
+                }
             </Wrapper>
-            <Buttons>
-                <RoundButton
-                    isDisabled={isDisabled}
-                    onClick={() => query.mutate()}>
-                    기록하기
-                </RoundButton>
-            </Buttons>
+            {
+                isMood ?
+                    <Buttons>
+                        <RoundButton
+                            isDisabled={isDisabled}
+                            onClick={() => postQuery.mutate()}>
+                            수정하기
+                        </RoundButton>
+                        <DeleteButton>삭제하기</DeleteButton>
+                    </Buttons> :
+                    <Buttons>
+                        <RoundButton
+                            isDisabled={isDisabled}
+                            onClick={() => postQuery.mutate()}>
+                            기록하기
+                        </RoundButton>
+                    </Buttons>
+            }
+
         </Base>
     );
 };
@@ -138,4 +166,9 @@ const Buttons = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 18px;
+`
+
+const DeleteButton = styled.button`
+  font-size: ${props => props.theme.fs11};
+  margin-top: 10px;
 `

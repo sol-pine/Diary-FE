@@ -3,11 +3,9 @@ import styled from "styled-components";
 import Header from "../elements/Header";
 import Banner from "../components/main/Banner";
 import Modal from "../elements/Modal";
-import {useAppDispatch, useAppSelector} from "../redux/store";
-import {setModalState} from "../redux/modules/modalSlice";
+import {useAppSelector} from "../redux/store";
 
 const MainPage = () => {
-    const dispatch = useAppDispatch();
     const isModalOpen = useAppSelector(state => state.modalSlice.modalState);
 
     return (
@@ -15,7 +13,7 @@ const MainPage = () => {
             <Header/>
             <Banner/>
             {
-                isModalOpen && <><Shadow onClick={()=>dispatch(setModalState(false))}/><Modal/></>
+                isModalOpen && <><Shadow/><Modal/></>
             }
         </div>
     );
@@ -28,7 +26,7 @@ const Shadow = styled.div`
   height: 100%;
   background: rgba(0, 0, 0, 0.7);
   position: absolute;
-  top:0;
-  left:0;
+  top: 0;
+  left: 0;
   z-index: 50;
 `

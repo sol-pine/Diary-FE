@@ -5,9 +5,14 @@ import useToday from "./useToday";
 
 const useMoodPostQuery = (moodText: string, color: string) => {
     const navigate = useNavigate();
-    const today = useToday();
 
-    return useMutation(() => postMood(Number(today.year), Number(today.month), Number(today.date), today.day, moodText, color),{
+    const today = useToday();
+    const year = Number(today?.year);
+    const month = Number(today?.month);
+    const date = Number(today?.date);
+    const day = today?.day
+
+    return useMutation(() => postMood(year, month, date, day, moodText, color), {
         onSuccess: () => navigate('/user')
     })
 }

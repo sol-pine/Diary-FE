@@ -15,3 +15,7 @@ export const putPwd = (id: string, code: string, newPwd: string) =>
 // 무드 기록
 export const postMood = (year: number, month: number, date: number, day: string, moodText: string, color: string) =>
     axiosInstance.post(`/mood`, {year: year, month: month, date: date, day: day, moodText: moodText, color: color})
+
+// 하루 무드 조회
+export const getMood = (year: number, month: number, date: number) =>
+    axiosInstance.get(`/mood`,{params: {year, month, date}})
