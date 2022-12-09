@@ -19,3 +19,7 @@ export const postMood = (year: number, month: number, date: number, day: string,
 // 하루 무드 조회
 export const getMood = (year: number, month: number, date: number) =>
     axiosInstance.get(`/mood`,{params: {year, month, date}})
+
+// 무드 수정
+export const putMood = (year: number, month: number, date: number, moodText: string, color: string) =>
+    axiosInstance.put(`/mood`, {year: year, month: month, date: date, newText: moodText, newColor: color})

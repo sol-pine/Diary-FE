@@ -6,27 +6,37 @@ import RoundButton from "./RoundButton";
 import {useAppDispatch} from "../redux/store";
 import {setModalState} from "../redux/modules/modalSlice";
 import useToday from "../hooks/useToday";
-import useMoodPostQuery from "../hooks/useMoodPostQuery";
+import usePostQuery from "../hooks/usePostQuery";
 import useMoodQuery from "../hooks/useMoodQuery";
+import useUpdateQuery from "../hooks/useUpdateQuery";
 
 
 const Modal = () => {
     const dispatch = useAppDispatch();
     const [mood, setMood] = useState<string>("");
     const [color, setColor] = useState<string>("");
-    const isDisabled = !(mood && color)
+    const isPostButtonDisabled = !(mood && color);
+    const isUpdateButtonDisabled = !(mood || color)
+
     // 오늘 날짜 조회
     const today = useToday();
+    const year = Number(today.year);
+    const month = Number(today.month);
+    const date = Number(today.date);
+
     // 무드 기록
-    const postQuery = useMoodPostQuery(mood, color);
+    const postQuery = usePostQuery(mood, color);
     // 무드 조회
-    const getQuery = useMoodQuery(Number(today.year), Number(today.month), Number(today.date));
+    const getQuery = useMoodQuery(year, month, date);
 
     const {isMood, moodColor, moodText} = useMemo(() => ({
         isMood: getQuery.data?.data.isMood,
         moodColor: getQuery.data?.data.color,
         moodText: getQuery.data?.data.moodText
     }), [getQuery])
+
+    // 무드 수정
+    const updateQuery = useUpdateQuery(year, month, date, mood ? mood : moodText, color ? color : moodColor);
 
     return (
         <Base>
@@ -45,27 +55,27 @@ const Modal = () => {
                 <label htmlFor='mood-color-input'>오늘의 기분과 어울리는 색</label>
                 {
                     getQuery.isSuccess &&
-                        <ColorInput
-                            onChange={e => setColor(e.target.value)}
-                            type='color'
-                            id='mood-color-input'
-                            defaultValue={moodColor? moodColor : theme.gray200}
-                        />
+                    <ColorInput
+                        onChange={e => setColor(e.target.value)}
+                        type='color'
+                        id='mood-color-input'
+                        defaultValue={moodColor ? moodColor : theme.gray200}
+                    />
                 }
             </Wrapper>
             {
                 isMood ?
                     <Buttons>
                         <RoundButton
-                            isDisabled={isDisabled}
-                            onClick={() => postQuery.mutate()}>
+                            isDisabled={isUpdateButtonDisabled}
+                            onClick={() => updateQuery.mutate()}>
                             수정하기
                         </RoundButton>
                         <DeleteButton>삭제하기</DeleteButton>
                     </Buttons> :
                     <Buttons>
                         <RoundButton
-                            isDisabled={isDisabled}
+                            isDisabled={isPostButtonDisabled}
                             onClick={() => postQuery.mutate()}>
                             기록하기
                         </RoundButton>

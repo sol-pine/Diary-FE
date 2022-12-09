@@ -34,7 +34,18 @@ axiosInstance.interceptors.response.use(
                 draggable: true,
                 progress: undefined,
                 theme: "light",
-            });
+            })
+        else
+            toast.error(`네트워크 연결에 실패했습니다.`, {
+            position: "top-center",
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        })
         return Promise.reject(error);
     }
 );
