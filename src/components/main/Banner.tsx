@@ -33,7 +33,6 @@ const Base = styled.div`
   justify-content: center;
   align-items: center;
   background: ${props => props.theme.lightPurple};
-
 `
 
 const Wrapper = styled.div`

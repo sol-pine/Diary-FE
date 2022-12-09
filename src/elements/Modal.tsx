@@ -5,6 +5,7 @@ import RoundButton from "./RoundButton";
 import {useAppDispatch} from "../redux/store";
 import {setModalState} from "../redux/modules/modalSlice";
 import useToday from "../hooks/useToday";
+import useMoodPostQuery from "../hooks/useMoodPostQuery";
 
 const Modal = () => {
     const dispatch = useAppDispatch();
@@ -13,6 +14,8 @@ const Modal = () => {
     const isDisabled = !(mood && color)
 
     const today = useToday();
+
+    const query = useMoodPostQuery(mood, color);
 
     return (
         <Base>
@@ -31,14 +34,13 @@ const Modal = () => {
                 <ColorInput
                     onChange={e => setColor(e.target.value)}
                     type='color'
-                    id ='mood-color-input'
+                    id='mood-color-input'
                 />
             </Wrapper>
             <Buttons>
                 <RoundButton
                     isDisabled={isDisabled}
-                    onClick={() => {
-                    }}>
+                    onClick={() => query.mutate()}>
                     기록하기
                 </RoundButton>
             </Buttons>
@@ -63,7 +65,7 @@ const Base = styled.div`
   padding: 17px 25px 0 25px;
   gap: 10px;
 
-  p,label {
+  p, label {
     font-size: ${props => props.theme.fs13};
     padding-left: 10px;
 

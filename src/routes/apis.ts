@@ -11,3 +11,7 @@ export const postLogIn = (id: string, pwd: string) =>
 // 비밀번호 재설정
 export const putPwd = (id: string, code: string, newPwd: string) =>
     axiosInstance.put(`/reset`, {id: id, code: code, newPwd: newPwd})
+
+// 무드 기록
+export const postMood = (year: number, month: number, date: number, day: string, moodText: string, color: string) =>
+    axiosInstance.post(`/mood`, {year: year, month: month, date: date, day: day, moodText: moodText, color: color})

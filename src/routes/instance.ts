@@ -12,7 +12,7 @@ axiosInstance.interceptors.request.use(
         if (!config.headers) config.headers = {};
         config.headers["Content-Type"] = "application/json; charset=utf-8";
         config.headers["X-Requested-With"] = "XMLHttpRequest";
-        config.headers["Authorization"] = `Bearer ${sessionStorage.getItem('token')}`;
+        config.headers["Authorization"] = `${sessionStorage.getItem('token')}`;
         config.headers.Accept = "application/json";
         return config;
     },
