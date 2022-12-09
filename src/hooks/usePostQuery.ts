@@ -3,7 +3,7 @@ import {useMutation} from "react-query";
 import {postMood} from "../routes/apis";
 import useToday from "./useToday";
 
-const useMoodPostQuery = (moodText: string, color: string) => {
+const usePostQuery = (moodText: string, color: string) => {
     const navigate = useNavigate();
 
     const today = useToday();
@@ -17,4 +17,4 @@ const useMoodPostQuery = (moodText: string, color: string) => {
     })
 }
 
-export default useMoodPostQuery;
+export default usePostQuery;
