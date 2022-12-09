@@ -4,6 +4,7 @@ const theme = {
     gray200: "#CCD8DC",
     main: "#294753",
     orange: "#EF9575",
+    lightPurple:"#E6E7FF",
     purple: "#A4A9F3",
     fs11: "11px",
     fs13: "13px",
