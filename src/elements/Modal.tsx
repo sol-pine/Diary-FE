@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import theme from "../styles/theme";
 import x from "../assets/ic-x.svg";
@@ -9,14 +9,14 @@ import useToday from "../hooks/useToday";
 import usePostQuery from "../hooks/usePostQuery";
 import useMoodQuery from "../hooks/useMoodQuery";
 import useUpdateQuery from "../hooks/useUpdateQuery";
+import useDeleteQuery from "../hooks/useDeleteQuery";
 
+interface StylePropsType {
+    background: string;
+}
 
 const Modal = () => {
     const dispatch = useAppDispatch();
-    const [mood, setMood] = useState<string>("");
-    const [color, setColor] = useState<string>("");
-    const isPostButtonDisabled = !(mood && color);
-    const isUpdateButtonDisabled = !(mood || color)
 
     // 오늘 날짜 조회
     const today = useToday();
@@ -24,19 +24,27 @@ const Modal = () => {
     const month = Number(today.month);
     const date = Number(today.date);
 
-    // 무드 기록
-    const postQuery = usePostQuery(mood, color);
     // 무드 조회
     const getQuery = useMoodQuery(year, month, date);
 
-    const {isMood, moodColor, moodText} = useMemo(() => ({
-        isMood: getQuery.data?.data.isMood,
-        moodColor: getQuery.data?.data.color,
-        moodText: getQuery.data?.data.moodText
-    }), [getQuery])
+    const [mood, setMood] = useState<string>('');
+    const [color, setColor] = useState<string>('');
 
+    // 버튼 활성화
+    const isPostButtonDisabled = !(mood && color);
+    const isUpdateButtonDisabled = !(mood || color);
+
+    // 무드 기록
+    const postQuery = usePostQuery(mood, color);
     // 무드 수정
-    const updateQuery = useUpdateQuery(year, month, date, mood ? mood : moodText, color ? color : moodColor);
+    const updateQuery = useUpdateQuery(year, month, date, mood ? mood : getQuery.data?.data.moodText, color ? color : getQuery.data?.data.color);
+    // 무드 삭제
+    const deleteQuery = useDeleteQuery(year, month, date);
+
+    useEffect(() => {
+        setMood('')
+        setColor('')
+    }, [deleteQuery.isSuccess])
 
     return (
         <Base>
@@ -49,29 +57,29 @@ const Modal = () => {
             <MoodInput
                 onChange={e => setMood(e.target.value)}
                 placeholder='오늘을 기록하세요 (띄어쓰기 포함 140자)'
-                defaultValue={moodText}
+                defaultValue={getQuery.data?.data.moodText ? getQuery.data?.data.moodText : mood}
             />
             <Wrapper>
                 <label htmlFor='mood-color-input'>오늘의 기분과 어울리는 색</label>
-                {
-                    getQuery.isSuccess &&
-                    <ColorInput
-                        onChange={e => setColor(e.target.value)}
-                        type='color'
-                        id='mood-color-input'
-                        defaultValue={moodColor ? moodColor : theme.gray200}
-                    />
-                }
+                <ColorLabel htmlFor='mood-color-input' background={color ? color : getQuery.data?.data.color}/>
+                <ColorInput
+                    onChange={e => setColor(e.target.value)}
+                    type='color'
+                    id='mood-color-input'
+                />
             </Wrapper>
             {
-                isMood ?
+                getQuery.data?.data.isMood ?
                     <Buttons>
                         <RoundButton
                             isDisabled={isUpdateButtonDisabled}
                             onClick={() => updateQuery.mutate()}>
                             수정하기
                         </RoundButton>
-                        <DeleteButton>삭제하기</DeleteButton>
+                        <DeleteButton
+                            onClick={() => deleteQuery.mutate()}
+                        >삭제하기
+                        </DeleteButton>
                     </Buttons> :
                     <Buttons>
                         <RoundButton
@@ -81,7 +89,6 @@ const Modal = () => {
                         </RoundButton>
                     </Buttons>
             }
-
         </Base>
     );
 };
@@ -148,27 +155,15 @@ const Wrapper = styled.div`
   gap: 5px;
 `
 
-const ColorInput = styled.input`
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  border: none;
+const ColorLabel = styled.label`
   width: 14px;
   height: 14px;
-  background: transparent;
   cursor: pointer;
+  background: ${(props: StylePropsType) => props.background ? props.background : theme.gray200};
+`
 
-  ::-webkit-color-swatch-wrapper {
-    padding: 0;
-  }
-
-  ::-webkit-color-swatch {
-    border: none;
-  }
-
-  :focus {
-    outline: none;
-  }
+const ColorInput = styled.input`
+  visibility: hidden;
 `
 
 const Buttons = styled.div`

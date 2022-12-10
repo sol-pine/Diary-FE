@@ -23,3 +23,7 @@ export const getMood = (year: number, month: number, date: number) =>
 // 무드 수정
 export const putMood = (year: number, month: number, date: number, moodText: string, color: string) =>
     axiosInstance.put(`/mood`, {year: year, month: month, date: date, newText: moodText, newColor: color})
+
+// 무드 삭제
+export const deleteMood = (year: number, month: number, date: number) =>
+    axiosInstance.delete('/mood',{params: {year, month, date}})
