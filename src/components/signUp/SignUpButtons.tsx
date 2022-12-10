@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import styled from "styled-components";
 import RoundButton from "../../elements/RoundButton";
-import useSignUpQuery from "../../hooks/useSignUpQuery";
+import useSignUpQuery from "../../hooks/query/useSignUpQuery";
 
 interface PropsType {
     id: string,

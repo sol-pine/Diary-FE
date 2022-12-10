@@ -6,10 +6,10 @@ import RoundButton from "./RoundButton";
 import {useAppDispatch} from "../redux/store";
 import {setModalState} from "../redux/modules/modalSlice";
 import useToday from "../hooks/useToday";
-import usePostQuery from "../hooks/usePostQuery";
-import useMoodQuery from "../hooks/useMoodQuery";
-import useUpdateQuery from "../hooks/useUpdateQuery";
-import useDeleteQuery from "../hooks/useDeleteQuery";
+import usePostQuery from "../hooks/query/usePostQuery";
+import useMoodQuery from "../hooks/query/useMoodQuery";
+import useUpdateQuery from "../hooks/query/useUpdateQuery";
+import useDeleteQuery from "../hooks/query/useDeleteQuery";
 
 interface StylePropsType {
     background: string;

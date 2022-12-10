@@ -1,5 +1,5 @@
 import {useMutation, useQueryClient} from "react-query";
-import {deleteMood} from "../routes/apis";
+import {deleteMood} from "../../routes/apis";
 
 const useDeleteQuery = (year: number, month: number, date: number) => {
     const queryClient = useQueryClient()

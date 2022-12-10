@@ -10,7 +10,7 @@ const MainPage = () => {
 
     return (
         <div>
-            <Header/>
+            <Header isMyPage={false}/>
             <Banner/>
             {
                 isModalOpen && <><Shadow/><Modal/></>

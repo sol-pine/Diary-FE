@@ -7,7 +7,7 @@ import Header from "../elements/Header";
 const LogInPage = () => {
     return (
         <Container>
-            <Header/>
+            <Header isMyPage={false}/>
             <Title title='로그인'/>
             <LogInForm/>
         </Container>

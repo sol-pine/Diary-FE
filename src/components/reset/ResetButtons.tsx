@@ -2,7 +2,7 @@ import React from 'react';
 import RoundButton from "../../elements/RoundButton";
 import styled from "styled-components";
 import {useNavigate} from "react-router-dom";
-import usePwdResetQuery from "../../hooks/usePwdResetQuery";
+import usePwdResetQuery from "../../hooks/query/usePwdResetQuery";
 
 interface PropsType {
     id: string;

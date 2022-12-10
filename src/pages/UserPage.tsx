@@ -1,9 +1,10 @@
 import React from 'react';
+import Header from "../elements/Header";
 
 const UserPage = () => {
     return (
         <div>
-            user page
+            <Header isMyPage={true}/>
         </div>
     );
 };

@@ -1,5 +1,5 @@
 import {useMutation} from "react-query";
-import {putPwd} from "../routes/apis";
+import {putPwd} from "../../routes/apis";
 import {useNavigate} from "react-router-dom";
 
 const usePwdResetQuery = (id: string, code: string, newPwd: string) => {

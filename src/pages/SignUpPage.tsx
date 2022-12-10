@@ -7,7 +7,7 @@ import Header from "../elements/Header";
 const SignUpPage = () => {
     return (
         <Container>
-            <Header/>
+            <Header isMyPage={false}/>
             <Title title='회원가입'/>
             <SignUpForm/>
         </Container>

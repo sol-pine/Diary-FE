@@ -1,7 +1,7 @@
 import {useNavigate} from "react-router-dom";
 import {useMutation} from "react-query";
-import {postMood} from "../routes/apis";
-import useToday from "./useToday";
+import {postMood} from "../../routes/apis";
+import useToday from "../useToday";
 
 const usePostQuery = (moodText: string, color: string) => {
     const navigate = useNavigate();

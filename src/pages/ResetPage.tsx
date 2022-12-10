@@ -7,7 +7,7 @@ import ResetForm from "../components/reset/ResetForm";
 const ResetPage = () => {
     return (
         <Container>
-            <Header/>
+            <Header isMyPage={false}/>
             <Title title='비밀번호 재설정'/>
             <ResetForm/>
         </Container>

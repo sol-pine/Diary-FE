@@ -1,5 +1,5 @@
 import {useMutation} from "react-query";
-import {postLogIn} from "../routes/apis";
+import {postLogIn} from "../../routes/apis";
 import {useNavigate} from "react-router-dom";
 
 const useLogInQuery = (id: string, pwd: string) => {
