@@ -29,6 +29,7 @@ const Modal = () => {
 
     const [mood, setMood] = useState<string>('');
     const [color, setColor] = useState<string>('');
+    const [isModified, setIsModified] = useState<boolean>(false);
 
     // 버튼 활성화
     const isPostButtonDisabled = !(mood && color);
@@ -55,9 +56,12 @@ const Modal = () => {
             </CloseButton>
             <p>오늘 날짜는 <span>{today.month}월 {today.date}일 {today.day}요일</span> 입니다.</p>
             <MoodInput
-                onChange={e => setMood(e.target.value)}
+                onChange={e => {
+                    setMood(e.target.value)
+                    setIsModified(true)
+                }}
                 placeholder='오늘을 기록하세요 (띄어쓰기 포함 140자)'
-                defaultValue={getQuery.data?.data.moodText ? getQuery.data?.data.moodText : mood}
+                value={mood || isModified ? mood : getQuery.data?.data.moodText}
             />
             <Wrapper>
                 <label htmlFor='mood-color-input'>오늘의 기분과 어울리는 색</label>
