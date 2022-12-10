@@ -62,7 +62,11 @@ const Modal = () => {
                 }}
                 placeholder='오늘을 기록하세요 (띄어쓰기 포함 140자)'
                 value={mood || isModified ? mood : getQuery.data?.data.moodText}
+                maxLength={140}
             />
+            {
+                mood && <Length>{mood.length}/140</Length>
+            }
             <Wrapper>
                 <label htmlFor='mood-color-input'>오늘의 기분과 어울리는 색</label>
                 <ColorLabel htmlFor='mood-color-input' background={color ? color : getQuery.data?.data.color}/>
@@ -151,6 +155,14 @@ const MoodInput = styled.textarea`
   :focus {
     outline: none;
   }
+`
+
+const Length = styled.span`
+  font-size: 9px;
+  color: ${props => props.theme.gray200};
+  position: absolute;
+  top: 300px;
+  right: 35px;
 `
 
 const Wrapper = styled.div`
