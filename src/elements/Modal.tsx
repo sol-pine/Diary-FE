@@ -5,7 +5,6 @@ import x from "../assets/ic-x.svg";
 import RoundButton from "./RoundButton";
 import {useAppDispatch} from "../redux/store";
 import {setModalState} from "../redux/modules/modalSlice";
-import useToday from "../hooks/useToday";
 import usePostQuery from "../hooks/query/usePostQuery";
 import useMoodQuery from "../hooks/query/useMoodQuery";
 import useUpdateQuery from "../hooks/query/useUpdateQuery";
@@ -14,15 +13,16 @@ import useDeleteQuery from "../hooks/query/useDeleteQuery";
 interface StylePropsType {
     background: string;
 }
+interface PropsType {
+ year:number;
+ month:number;
+ date:number;
+ day:number;
+}
 
-const Modal = () => {
+const Modal = ({year, month, date, day}:PropsType) => {
     const dispatch = useAppDispatch();
-
-    // 오늘 날짜 조회
-    const today = useToday();
-    const year = Number(today.year);
-    const month = Number(today.month);
-    const date = Number(today.date);
+    const weekLabel = ['일', '월', '화', '수', '목', '금', '토'];
 
     // 무드 조회
     const getQuery = useMoodQuery(year, month, date);
@@ -39,6 +39,7 @@ const Modal = () => {
     const postQuery = usePostQuery(mood, color);
     // 무드 수정
     const updateQuery = useUpdateQuery(year, month, date, mood ? mood : getQuery.data?.data.moodText, color ? color : getQuery.data?.data.color);
+
     // 무드 삭제
     const deleteQuery = useDeleteQuery(year, month, date);
 
@@ -48,13 +49,14 @@ const Modal = () => {
     }, [deleteQuery.isSuccess])
 
     return (
+        <><Shadow/>
         <Base>
             <CloseButton
                 onClick={() => dispatch(setModalState(false))}
             >
                 <img src={x} alt='닫기 아이콘'/>
             </CloseButton>
-            <p>오늘 날짜는 <span>{today.month}월 {today.date}일 {today.day}요일</span> 입니다.</p>
+            <p>오늘 날짜는 <span>{month}월 {date}일 {weekLabel[day]}요일</span> 입니다.</p>
             <MoodInput
                 onChange={e => {
                     setMood(e.target.value)
@@ -98,10 +100,21 @@ const Modal = () => {
                     </Buttons>
             }
         </Base>
+        </>
     );
 };
 
 export default Modal;
+
+const Shadow = styled.div`
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 50;
+`
 
 const Base = styled.div`
   position: absolute;

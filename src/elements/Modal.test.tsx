@@ -3,11 +3,18 @@ import userEvent from "@testing-library/user-event";
 import Modal from "./Modal";
 import {Provider} from "react-redux";
 import store from "../redux/store";
+import {QueryClient, QueryClientProvider} from "react-query";
+import {BrowserRouter} from "react-router-dom";
 
 test('기록하기 버튼 활성화 테스트', () => {
+    const queryClient = new QueryClient();
     render(
         <Provider store={store}>
-            <Modal/>
+            <BrowserRouter>
+                <QueryClientProvider client={queryClient}>
+                    <Modal year={2022} month={12} date={11} day={0}/>
+                </QueryClientProvider>
+            </BrowserRouter>
         </Provider>
     )
 
