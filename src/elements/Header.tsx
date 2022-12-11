@@ -2,7 +2,6 @@ import React from 'react';
 import styled from "styled-components";
 import {useNavigate} from "react-router-dom";
 import logo from "../assets/logo.svg";
-import useWithdrawalQuery from "../hooks/query/useWithdrawalQuery";
 
 interface PropsType {
     isMyPage: boolean;
@@ -11,8 +10,6 @@ interface PropsType {
 const Header = ({isMyPage}: PropsType) => {
     const navigate = useNavigate();
     const token = sessionStorage.getItem('token');
-
-    const query = useWithdrawalQuery()
 
     const handleLogOut = () => {
         sessionStorage.removeItem('token')
@@ -31,19 +28,13 @@ const Header = ({isMyPage}: PropsType) => {
                     token ?
                         <Buttons>
                             {
-                                isMyPage ?
-                                    <button
-                                        onClick={() => query.mutate()}
-                                    >
-                                        탈퇴
-                                    </button> :
+                                !isMyPage &&
                                     <button
                                         onClick={() => navigate('/user')}
                                     >
                                         마이페이지
                                     </button>
                             }
-
                             <button
                                 onClick={() => handleLogOut()}
                             >
