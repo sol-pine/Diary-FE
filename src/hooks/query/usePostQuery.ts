@@ -1,19 +1,27 @@
-import {useNavigate} from "react-router-dom";
-import {useMutation} from "react-query";
+import {useMutation, useQueryClient} from "react-query";
 import {postMood} from "../../routes/apis";
 import useToday from "../useToday";
+import {useNavigate} from "react-router-dom";
+import {setModalState} from "../../redux/modules/modalSlice";
+import {useAppDispatch} from "../../redux/store";
+
 
 const usePostQuery = (moodText: string, color: string) => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+    const queryClient = useQueryClient();
 
     const today = useToday();
-    const year = Number(today?.year);
-    const month = Number(today?.month);
-    const date = Number(today?.date);
-    const day = today?.day
+    const year = today.year;
+    const month = today.month;
+    const date = today.date;
 
-    return useMutation(() => postMood(year, month, date, day, moodText, color), {
-        onSuccess: () => navigate('/user')
+    return useMutation(() => postMood(year, month, date, moodText, color), {
+        onSuccess: () => queryClient.invalidateQueries('moods')
+            .then(()=> {
+                dispatch(setModalState(false))
+                navigate('/user')
+            })
     })
 }
 
