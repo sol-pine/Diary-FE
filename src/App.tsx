@@ -22,7 +22,7 @@ function App() {
             <ThemeProvider theme={theme}>
                 <GlobalStyle/>
                 <div className="App">
-                    <ToastContainer />
+                    <ToastContainer limit={1}/>
                     <Routes>
                         <Route path="/" element={<MainPage/>}/>
                         <Route path="/login" element={<LogInPage/>}/>
