@@ -1,25 +1,57 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
-import banner from "../../assets/banner.svg";
+import bannerGraphic from "../../assets/banner-graphic.svg";
+import bannerText from "../../assets/banner-text.svg";
 import RoundButton from "../../elements/RoundButton";
 import {useAppDispatch} from "../../redux/store";
-import {setModalState} from "../../redux/modules/modalSlice";
+import {setModalState, setDateState} from "../../redux/modules/modalSlice";
+import useToday from "../../hooks/useToday";
 
 const Banner = () => {
-  const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch();
+
+    const [viewport, setViewport] = useState<number>(window.innerWidth);
+    
+    useEffect(() => {
+        const resizeListener = () => {
+            setViewport(window.innerWidth);
+        };
+        window.addEventListener("resize", resizeListener);
+    });
+
+    const {year, month, date} = useToday();
+    const openTodayModal = () => {
+        dispatch(setDateState({year: year, month: month, date: date}))
+        dispatch(setModalState(true))
+    }
 
     return (
         <Base>
-            <Wrapper>
-                <img src={banner} alt='배너'/>
-                <ButtonWrapper>
-                    <RoundButton
-                        isDisabled={false}
-                        onClick={() => dispatch(setModalState(true))}>
-                        오늘의 기분 기록하기
-                    </RoundButton>
-                </ButtonWrapper>
-            </Wrapper>
+            {
+                viewport >710 ?
+                    <Wrapper>
+                        <ButtonWrapper>
+                            <BannerText src={bannerText} alt='매일매일의 기분을 무드 다이어리로 기록해보세요.'/>
+                            <RoundButton
+                                isDisabled={false}
+                                onClick={() => openTodayModal()}>
+                                오늘의 기분 기록하기
+                            </RoundButton>
+                        </ButtonWrapper>
+                        <BannerGraphic src={bannerGraphic} alt='배너 그래픽'/>
+                    </Wrapper>:
+                    <Wrapper className='small'>
+                        <ButtonWrapper>
+                            <BannerText src={bannerText} alt='매일매일의 기분을 무드 다이어리로 기록해보세요.'/>
+                            <RoundButton
+                                isDisabled={false}
+                                onClick={() => openTodayModal()}>
+                                오늘의 기분 기록하기
+                            </RoundButton>
+                        </ButtonWrapper>
+                        <BannerGraphic src={bannerGraphic} alt='배너 그래픽'/>
+                    </Wrapper>
+            }
         </Base>
     );
 };
@@ -28,7 +60,6 @@ export default Banner;
 
 const Base = styled.div`
   width: 100%;
-  height: 500px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -36,18 +67,31 @@ const Base = styled.div`
 `
 
 const Wrapper = styled.div`
-  width: 928px;
-  height: 333px;
-  position: relative;
+  width: 660px;
+  display: flex;
+  justify-content: space-between;
+  padding: 50px 0;
 
-  img {
-    width: 928px;
-    object-fit: contain;
+  &.small {
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 30px;
   }
 `
 
 const ButtonWrapper = styled.div`
-  position: absolute;
-  top: 270px;
-  left: 0;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap:75px;
+`
+
+const BannerText = styled.img`
+  width: 320px;
+  object-fit: contain;
+`
+
+const BannerGraphic = styled.img`
+  width: 255px;
+  object-fit: contain;
 `
